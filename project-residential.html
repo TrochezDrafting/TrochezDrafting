@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Residential Project — Trochez Drafting & As-Built Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF7; --paper-dim:#F1F0EA; --ink:#1C1C1A; --graphite:#6E6E68;
+    --blueprint:#2B4C7E; --blueprint-dim:#4A6B9C; --line:#D8D6CE; --line-strong:#B9B7AC;
+    --display:'Space Grotesk', sans-serif; --body:'Inter', sans-serif; --mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--blueprint);}
+  h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
+  h1{font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.08;font-weight:700;}
+  h2{font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.2;}
+  p.lede{font-size:1.1rem;color:var(--graphite);max-width:58ch;}
+  .hairline{border:none;border-top:1px solid var(--line);}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(250,250,247,0.9);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{display:flex;flex-direction:column;line-height:1.1;}
+  .logo-main{font-family:var(--mono);font-weight:500;font-size:15px;letter-spacing:0.06em;}
+  .logo-sub{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--graphite);text-transform:uppercase;}
+  nav.links{display:flex;gap:36px;align-items:center;}
+  nav.links a{font-size:14px;color:var(--ink);}
+  nav.links a:hover{color:var(--blueprint);}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:0.03em;padding:11px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);display:inline-block;transition:all .15s ease;}
+  .btn:hover{background:var(--blueprint);border-color:var(--blueprint);}
+  @media (max-width:860px){ nav.links{display:none;} }
+
+  /* project hero */
+  .proj-hero{padding:64px 0 40px;}
+  .proj-tag-row{display:flex;gap:10px;align-items:center;margin-bottom:18px;}
+  .proj-back{font-family:var(--mono);font-size:12.5px;color:var(--graphite);display:inline-block;margin-bottom:28px;}
+  .proj-back:hover{color:var(--blueprint);}
+  .proj-hero p.lede{margin-top:18px;}
+
+  /* meta strip (title-block style) */
+  .meta-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-top:36px;}
+  .meta-item{padding:16px 20px;border-right:1px solid var(--line);}
+  .meta-item:last-child{border-right:none;}
+  .meta-label{font-family:var(--mono);font-size:10px;color:var(--graphite);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+  .meta-value{font-family:var(--mono);font-size:13px;color:var(--ink);}
+  @media (max-width:860px){ .meta-strip{grid-template-columns:1fr 1fr;} .meta-item{border-bottom:1px solid var(--line);} }
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;}
+  .gallery-box{
+    height:220px;border:1.5px dashed var(--line-strong);background:var(--paper-dim);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .gallery-box span{font-family:var(--mono);font-size:11px;color:var(--line-strong);text-transform:uppercase;letter-spacing:0.05em;text-align:center;}
+  @media (max-width:860px){ .gallery{grid-template-columns:1fr;} }
+
+  .section{padding:64px 0;}
+  .scope-list{list-style:none;margin-top:8px;}
+  .scope-list li{
+    padding:16px 0;border-top:1px solid var(--line);font-size:0.98rem;color:var(--ink);
+    display:flex;gap:14px;
+  }
+  .scope-list li:last-child{border-bottom:1px solid var(--line);}
+  .scope-num{font-family:var(--mono);font-size:12px;color:var(--blueprint);min-width:26px;}
+
+  .next-project{
+    background:var(--ink);color:var(--paper);padding:56px 0;
+  }
+  .next-project .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+  .next-project .eyebrow{color:#8FB1E0;margin-bottom:8px;}
+  .next-project h2{color:var(--paper);}
+  .next-project .btn{background:var(--paper);color:var(--ink);border-color:var(--paper);}
+  .next-project .btn:hover{background:var(--blueprint-dim);color:var(--paper);border-color:var(--blueprint-dim);}
+
+  footer{padding:28px 0;background:var(--ink);border-top:1px solid rgba(250,250,247,0.15);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;color:#8C8B84;font-family:var(--mono);font-size:11.5px;letter-spacing:0.03em;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a href="index.html" class="logo">
+      <span class="logo-main">TROCHEZ</span>
+      <span class="logo-sub">Drafting &amp; As-Built Services</span>
+    </a>
+    <nav class="links">
+      <a href="services.html">Services</a>
+      <a href="index.html#work">Work</a>
+      <a href="about.html">About</a>
+      <a href="index.html#process">Process</a>
+      <a href="index.html#credentials">Credentials</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <a href="index.html#contact" class="btn">Request a quote</a>
+  </div>
+</header>
+
+<section class="proj-hero">
+  <div class="wrap">
+    <a href="index.html#work" class="proj-back">← Back to work</a>
+    <span class="eyebrow">Residential</span>
+    <h1 style="margin-top:14px;">[Residence Name] Remodel</h1>
+    <p class="lede">A small residential remodel and addition, starting with a full as-built survey of existing conditions to give the design team an accurate baseline before permitting.</p>
+
+    <div class="meta-strip">
+      <div class="meta-item"><div class="meta-label">Location</div><div class="meta-value">[City, CA]</div></div>
+      <div class="meta-item"><div class="meta-label">Year</div><div class="meta-value">[Year]</div></div>
+      <div class="meta-item"><div class="meta-label">Scope</div><div class="meta-value">Remodel &amp; Addition</div></div>
+      <div class="meta-item"><div class="meta-label">Services</div><div class="meta-value">As-Built + Drafting</div></div>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery-box"><span>Project Photo<br>Placeholder</span></div>
+      <div class="gallery-box"><span>Project Photo<br>Placeholder</span></div>
+      <div class="gallery-box"><span>Project Photo<br>Placeholder</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Overview</span>
+    <h2 style="margin-top:14px;">Existing conditions, verified in the field.</h2>
+    <p class="lede" style="margin-top:16px;">The homeowners were planning a kitchen and rear addition but had no existing drawings on file. A full field survey captured accurate dimensions, structural framing locations, and existing utility runs, which were then drafted into a clean set of existing-conditions plans for the architect of record to design from.</p>
+
+    <ul class="scope-list">
+      <li><span class="scope-num">01</span><span>On-site field measurement of existing floor plan, exterior walls, and roof lines.</span></li>
+      <li><span class="scope-num">02</span><span>Documentation of existing door, window, and structural opening locations.</span></li>
+      <li><span class="scope-num">03</span><span>Drafted existing-conditions plans and elevations in AutoCAD for design handoff.</span></li>
+      <li><span class="scope-num">04</span><span>Coordinated revisions with the project architect ahead of permit submittal.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="next-project">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Next</span>
+      <h2>See the commercial project →</h2>
+    </div>
+    <a href="project-commercial.html" class="btn">View project</a>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Trochez Drafting &amp; As-Built Services</span>
+    <span>San Pedro, CA</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trochez Drafting & As-Built Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF7;
+    --paper-dim:#F1F0EA;
+    --ink:#1C1C1A;
+    --graphite:#6E6E68;
+    --blueprint:#2B4C7E;
+    --blueprint-dim:#4A6B9C;
+    --line:#D8D6CE;
+    --line-strong:#B9B7AC;
+    --display:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--blueprint);
+  }
+  h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
+  h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;font-weight:700;}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.15;}
+  p.lede{font-size:1.15rem;color:var(--graphite);max-width:46ch;}
+  .hairline{border:none;border-top:1px solid var(--line);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,250,247,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{display:flex;flex-direction:column;line-height:1.1;}
+  .logo-main{font-family:var(--mono);font-weight:500;font-size:15px;letter-spacing:0.06em;}
+  .logo-sub{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--graphite);text-transform:uppercase;}
+  nav.links{display:flex;gap:36px;align-items:center;}
+  nav.links a{font-size:14px;color:var(--ink);position:relative;}
+  nav.links a:hover{color:var(--blueprint);}
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:0.03em;
+    padding:11px 22px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    display:inline-block;
+    transition:all .15s ease;
+  }
+  .btn:hover{background:var(--blueprint);border-color:var(--blueprint);}
+  .btn-outline{background:transparent;color:var(--ink);border:1px solid var(--line-strong);}
+  .btn-outline:hover{border-color:var(--blueprint);color:var(--blueprint);background:transparent;}
+  .menu-toggle{display:none;font-family:var(--mono);font-size:13px;border:1px solid var(--ink);padding:8px 14px;background:none;cursor:pointer;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:96px 0 60px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
+  .hero-cta{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap;}
+  .hero-note{margin-top:20px;font-family:var(--mono);font-size:12.5px;color:var(--graphite);letter-spacing:0.02em;}
+
+  .dim-line{stroke:var(--blueprint);stroke-width:1;fill:none;}
+  .dim-tick{stroke:var(--blueprint);stroke-width:1;}
+  .plan-line{stroke:var(--ink);stroke-width:1.4;fill:none;}
+  .plan-thin{stroke:var(--line-strong);stroke-width:1;fill:none;}
+  .dim-label{font-family:var(--mono);font-size:10px;fill:var(--blueprint);letter-spacing:0.03em;}
+
+  /* ---------- services ---------- */
+  .section{padding:88px 0;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .service-card{background:var(--paper);padding:36px 32px;}
+  .service-icon{width:38px;height:38px;margin-bottom:22px;}
+  .service-card h3{font-size:1.2rem;margin-bottom:10px;}
+  .service-card p{color:var(--graphite);font-size:0.96rem;}
+
+  /* ---------- work ---------- */
+  .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .work-card{background:var(--paper);display:flex;flex-direction:column;}
+  .work-thumb{
+    height:180px;border-bottom:1px solid var(--line);
+    background:var(--paper-dim);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .work-thumb span{font-family:var(--mono);font-size:11px;color:var(--line-strong);text-transform:uppercase;letter-spacing:0.05em;text-align:center;}
+  .work-body{padding:26px 26px 30px;flex:1;display:flex;flex-direction:column;}
+  .work-body .eyebrow{margin-bottom:8px;}
+  .work-body h3{font-size:1.15rem;margin-bottom:8px;}
+  .work-body p{color:var(--graphite);font-size:0.92rem;flex:1;}
+  .work-link{margin-top:16px;font-family:var(--mono);font-size:12.5px;color:var(--blueprint);}
+  .work-link:hover{text-decoration:underline;}
+
+  /* ---------- process ---------- */
+  .process-list{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);}
+  .process-step{padding:28px 24px 0 0;border-right:1px solid var(--line);position:relative;}
+  .process-step:last-child{border-right:none;}
+  .process-num{font-family:var(--mono);font-size:12px;color:var(--blueprint);letter-spacing:0.05em;}
+  .process-step h3{font-size:1.05rem;margin:14px 0 10px;}
+  .process-step p{color:var(--graphite);font-size:0.92rem;padding-right:16px;}
+
+  /* ---------- credentials / titleblock ---------- */
+  .cred-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:start;}
+  .cred-copy p{color:var(--graphite);margin-bottom:16px;max-width:52ch;}
+  .titleblock{
+    border:1px solid var(--ink);
+    font-family:var(--mono);
+    font-size:12.5px;
+  }
+  .tb-header{
+    background:var(--ink);color:var(--paper);
+    padding:14px 18px;
+    letter-spacing:0.05em;
+    font-size:12px;
+    text-transform:uppercase;
+  }
+  .tb-row{display:grid;grid-template-columns:38% 62%;border-top:1px solid var(--line);}
+  .tb-row:first-of-type{border-top:none;}
+  .tb-label{padding:13px 16px;color:var(--graphite);border-right:1px solid var(--line);text-transform:uppercase;letter-spacing:0.04em;font-size:10.5px;}
+  .tb-value{padding:13px 16px;color:var(--ink);}
+
+  /* ---------- clients ---------- */
+  .client-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .client-card{background:var(--paper-dim);padding:32px;text-align:left;}
+  .client-card .eyebrow{margin-bottom:10px;}
+  .client-card p{color:var(--graphite);font-size:0.92rem;}
+
+  /* ---------- contact ---------- */
+  .contact-section{background:var(--ink);color:var(--paper);padding:88px 0;}
+  .contact-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:end;}
+  .contact-section h2{color:var(--paper);}
+  .contact-section p.lede{color:#C8C7C0;}
+  .contact-list{list-style:none;margin-top:32px;}
+  .contact-list li{font-family:var(--mono);font-size:14px;padding:14px 0;border-top:1px solid rgba(250,250,247,0.15);display:flex;justify-content:space-between;gap:20px;}
+  .contact-list li:last-child{border-bottom:1px solid rgba(250,250,247,0.15);}
+  .contact-list span.label{color:#8C8B84;text-transform:uppercase;letter-spacing:0.06em;font-size:11px;}
+  .contact-section .btn{background:var(--paper);color:var(--ink);border-color:var(--paper);}
+  .contact-section .btn:hover{background:var(--blueprint-dim);border-color:var(--blueprint-dim);color:var(--paper);}
+
+  footer{padding:28px 0;background:var(--ink);border-top:1px solid rgba(250,250,247,0.15);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;color:#8C8B84;font-family:var(--mono);font-size:11.5px;letter-spacing:0.03em;}
+
+  @media (max-width:860px){
+    nav.links{display:none;}
+    .menu-toggle{display:block;}
+    .hero-grid, .cred-grid, .contact-grid{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
+    .work-grid{grid-template-columns:1fr;}
+    .process-list{grid-template-columns:1fr;}
+    .process-step{border-right:none;border-bottom:1px solid var(--line);padding-bottom:24px;}
+    .client-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <div class="logo">
+      <span class="logo-main">TROCHEZ</span>
+      <span class="logo-sub">Drafting &amp; As-Built Services</span>
+    </div>
+    <nav class="links">
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn">Request a quote</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">As-Built Surveys &amp; Architectural Drafting</span>
+      <h1 style="margin-top:18px;">Precise field measurements.<br>Drawings you can build from.</h1>
+      <p class="lede" style="margin-top:22px;">Freelance as-built documentation and drafting support for architecture firms, contractors, and multi-site remodel programs across Los Angeles and Orange County.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn">Request a quote</a>
+        <a href="services.html" class="btn btn-outline">View services</a>
+      </div>
+      <div class="hero-note">AutoCAD &nbsp;·&nbsp; Bluebeam &nbsp;·&nbsp; ARE 5.0 — PjM &amp; PcM Passed</div>
+    </div>
+    <div>
+      <svg viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg">
+        <!-- simple existing-conditions plan corner with dimension annotations -->
+        <path class="plan-line" d="M60 60 H320 V260 H180 V220 H60 Z"/>
+        <path class="plan-thin" d="M60 60 L320 260" stroke-dasharray="2 4" opacity="0.35"/>
+        <!-- door swing -->
+        <path class="plan-thin" d="M180 220 A40 40 0 0 0 220 260"/>
+        <line class="plan-thin" x1="180" y1="220" x2="220" y2="220"/>
+        <!-- top dimension line -->
+        <line class="dim-line" x1="60" y1="30" x2="320" y2="30"/>
+        <line class="dim-tick" x1="60" y1="24" x2="60" y2="36"/>
+        <line class="dim-tick" x1="320" y1="24" x2="320" y2="36"/>
+        <text class="dim-label" x="165" y="22">21'-8"</text>
+        <!-- left dimension line -->
+        <line class="dim-line" x1="30" y1="60" x2="30" y2="260"/>
+        <line class="dim-tick" x1="24" y1="60" x2="36" y2="60"/>
+        <line class="dim-tick" x1="24" y1="260" x2="36" y2="260"/>
+        <text class="dim-label" x="0" y="163" transform="rotate(-90 12 163)">13'-2"</text>
+        <!-- field note callout -->
+        <circle cx="240" cy="120" r="14" fill="none" stroke="var(--blueprint)" stroke-width="1"/>
+        <text class="dim-label" x="234" y="124">A1</text>
+        <line class="dim-tick" x1="254" y1="120" x2="290" y2="100"/>
+        <text class="dim-label" x="292" y="98">verified 6/24</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Services</span>
+      <h2 style="margin-top:14px;">Field-verified accuracy, drafted to your standards.</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" class="plan-line"/><line x1="6" y1="6" x2="34" y2="34" class="plan-thin"/></svg>
+        <h3>As-Built Surveys</h3>
+        <p>On-site field measurements and existing-conditions documentation for renovation, TI, and permitting projects.</p>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 40 40"><path class="plan-line" d="M4 34 L4 12 L20 4 L36 12 L36 34 Z"/></svg>
+        <h3>Architectural Drafting</h3>
+        <p>Plans, elevations, sections, and schedules in AutoCAD — built to match your firm's drawing standards.</p>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 40 40"><rect x="8" y="8" width="10" height="10" class="plan-line"/><rect x="22" y="22" width="10" height="10" class="plan-line"/><line x1="18" y1="13" x2="22" y2="27" class="plan-thin"/></svg>
+        <h3>Remodel &amp; TI Documentation</h3>
+        <p>Multi-site remodel and prototype documentation for retail and quick-serve restaurant programs.</p>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" class="plan-line"/><line x1="20" y1="8" x2="20" y2="20" class="plan-thin"/><line x1="20" y1="20" x2="28" y2="24" class="plan-thin"/></svg>
+        <h3>Overflow &amp; Contract Support</h3>
+        <p>Deadline-driven drafting capacity for firms that need an extra set of hands without adding headcount.</p>
+      </div>
+    </div>
+    <a href="services.html" class="work-link" style="display:inline-block;margin-top:28px;">See full services page →</a>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Selected Work</span>
+      <h2 style="margin-top:14px;">A look at recent projects.</h2>
+    </div>
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="work-thumb"><span>Project Photo<br>Placeholder</span></div>
+        <div class="work-body">
+          <span class="eyebrow">Residential</span>
+          <h3>[Residence Name] Remodel</h3>
+          <p>As-built survey and drafting for a small residential remodel and addition.</p>
+          <a href="project-residential.html" class="work-link">View project →</a>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb"><span>Project Photo<br>Placeholder</span></div>
+        <div class="work-body">
+          <span class="eyebrow">Commercial</span>
+          <h3>[Business Name] Tenant Improvement</h3>
+          <p>Existing conditions documentation and drafting for a small commercial TI project.</p>
+          <a href="project-commercial.html" class="work-link">View project →</a>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb"><span>Project Photo<br>Placeholder</span></div>
+        <div class="work-body">
+          <span class="eyebrow">QSR / Restaurant</span>
+          <h3>Raising Cane's Remodel</h3>
+          <p>Field-verified as-built survey supporting a quick-serve restaurant remodel.</p>
+          <a href="project-raising-canes.html" class="work-link">View project →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<section class="section" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Process</span>
+      <h2 style="margin-top:14px;">From site visit to delivered drawings.</h2>
+    </div>
+    <div class="process-list">
+      <div class="process-step">
+        <span class="process-num">01 / Field Visit</span>
+        <h3>Site measure</h3>
+        <p>On-site verification of existing dimensions, conditions, and structural elements.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-num">02 / Documentation</span>
+        <h3>Field notes &amp; photos</h3>
+        <p>Detailed notes and photo reference organized for accurate translation into CAD.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-num">03 / Drafting</span>
+        <h3>CAD production</h3>
+        <p>Plans, elevations, and sections drafted to your firm's layer standards and formats.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-num">04 / Delivery</span>
+        <h3>Review &amp; handoff</h3>
+        <p>Markup review in Bluebeam, revisions, and final delivery in your preferred file format.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<section class="section" id="credentials">
+  <div class="wrap cred-grid">
+    <div class="cred-copy">
+      <span class="eyebrow">Credentials</span>
+      <h2 style="margin:14px 0 24px;">Project management experience, drafting precision.</h2>
+      <p>Six years of architectural drafting and project management experience across residential, commercial, and quick-serve restaurant projects — including field-verified as-builts for Natalie Kazanjian Architect Inc. and Donatelli's Construction, residential design at LM CAD Services, and project management at CSRS, Inc.</p>
+      <p>Currently pursuing architecture licensure and an MBA, with the Project Management and Practice Management divisions of the ARE 5.0 already passed — bringing a project-delivery mindset to every set of drawings.</p>
+    </div>
+    <div class="titleblock">
+      <div class="tb-header">Drawing Title Block</div>
+      <div class="tb-row"><div class="tb-label">Drawn by</div><div class="tb-value">Gustavo Trochez</div></div>
+      <div class="tb-row"><div class="tb-label">Education</div><div class="tb-value">B.Arch, Cal Poly Pomona</div></div>
+      <div class="tb-row"><div class="tb-label">In Progress</div><div class="tb-value">MBA, CSU Long Beach — Exp. 2027</div></div>
+      <div class="tb-row"><div class="tb-label">ARE 5.0</div><div class="tb-value">PjM &amp; PcM — Passed</div></div>
+      <div class="tb-row"><div class="tb-label">Software</div><div class="tb-value">AutoCAD, Bluebeam, Excel</div></div>
+      <div class="tb-row"><div class="tb-label">Based in</div><div class="tb-value">San Pedro, CA</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Who I work with</span>
+      <h2 style="margin-top:14px;">Built for firms that need a reliable field partner.</h2>
+    </div>
+    <div class="client-row">
+      <div class="client-card">
+        <span class="eyebrow">Small &amp; Mid-Size Firms</span>
+        <p>Overflow drafting and field measurements when in-house teams are at capacity.</p>
+      </div>
+      <div class="client-card">
+        <span class="eyebrow">General Contractors</span>
+        <p>Existing conditions documentation ahead of permitting and remodel scopes.</p>
+      </div>
+      <div class="client-card">
+        <span class="eyebrow">QSR &amp; Retail Groups</span>
+        <p>Fast turnaround as-builts for remodels, rebuilds, and prototype rollouts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow" style="color:#8FB1E0;">Get in touch</span>
+      <h2 style="margin-top:14px;">Have a site that needs measuring?</h2>
+      <p class="lede" style="margin-top:16px;">Send a few details about the project — location, scope, and timeline — and I'll follow up with availability and a quote.</p>
+      <a href="mailto:gust.trochez@gmail.com?subject=Project%20inquiry%20-%20As-Built%2FDrafting" class="btn" style="margin-top:28px;display:inline-block;">Email a project brief</a>
+    </div>
+    <ul class="contact-list">
+      <li><span class="label">Email</span><span>gust.trochez@gmail.com</span></li>
+      <li><span class="label">Phone</span><span>(562) 528-9576</span></li>
+      <li><span class="label">Location</span><span>San Pedro, CA</span></li>
+      <li><span class="label">Service Area</span><span>Los Angeles &amp; Orange County</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Trochez Drafting &amp; As-Built Services</span>
+    <span>San Pedro, CA</span>
+  </div>
+</footer>
+
+</body>
+</html>
