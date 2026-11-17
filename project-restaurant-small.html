@@ -203,6 +203,15 @@ h3{font-size:1.2rem;}
   .section{padding:64px 0;}
 }
 
+.uc-bar{height:34px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;background:rgba(232,116,59,0.82);color:var(--navy-deep);font-family:var(--mono);font-size:12px;letter-spacing:0.04em;white-space:nowrap;overflow:hidden;border-top:1px solid rgba(18,29,41,0.12);}
+.uc-bar strong{font-weight:500;text-transform:uppercase;letter-spacing:0.1em;}
+.uc-bar a{text-decoration:underline;text-underline-offset:3px;font-weight:500;}
+@media (max-width:760px){.uc-bar .uc-more{display:none;}}
+.site-header{background:linear-gradient(rgba(250,250,247,0.82),rgba(250,250,247,0.82)) top / 100% calc(100% - 34px) no-repeat !important;}
+html body [id]{scroll-margin-top:123px;}
+html body #portfolio{scroll-margin-top:59px;}
+html body #project-photos,html body #project-deliverables{scroll-margin-top:147px;}
+@media (max-width:560px){html body [id]{scroll-margin-top:107px;}html body #portfolio{scroll-margin-top:67px;}html body #project-photos,html body #project-deliverables{scroll-margin-top:131px;}}
 .hero-copy h1{max-width:100%;}
 .work-card .text-link{color:var(--navy);transition:color .15s;}
 .work-card:hover .text-link,.work-card:focus-visible .text-link{color:var(--orange-deep);}
@@ -229,6 +238,7 @@ h3{font-size:1.2rem;}
 .gallery-nav .prev{background:#FAFAF7;color:#1B2A3A;}
 .gallery-nav .next{background:#1B2A3A;color:#fff;}
 .gallery-nav button:disabled{opacity:.4;cursor:default;}
+.dwg-stage:fullscreen{height:100%!important;}
 .gallery-nav .count{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:#5F6670;min-width:64px;text-align:center;}
 </style>
 </head>
@@ -281,6 +291,7 @@ h3{font-size:1.2rem;}
       <a href="#contact">Get In Touch</a>
     </nav>
   </div>
+  <div class="uc-bar" role="status"><strong>Site under construction</strong><span class="uc-more">· Some Projects and Site details still pending.</span><span>·</span><a href="#contact">Get in touch →</a></div>
 </header>
 
 <section class="grid-band page-hero has-photo">
@@ -349,10 +360,10 @@ h3{font-size:1.2rem;}
         </div>
         <div style="display: flex; align-items: center; gap: 8px">
           <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5F6670">Drag to pan · scroll to zoom</span>
-          <button type="button" disabled aria-label="Full screen" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid #D8D6CE; color: #1B2A3A; cursor: pointer"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M3.5 8V3.5H8M12 3.5h4.5V8M16.5 12v4.5H12M8 16.5H3.5V12" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></button>
+          <button type="button" class="dwg-full" disabled aria-label="Full screen" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid #D8D6CE; color: #1B2A3A; cursor: pointer"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M3.5 8V3.5H8M12 3.5h4.5V8M16.5 12v4.5H12M8 16.5H3.5V12" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></button>
         </div>
       </div>
-      <div style="position: relative; height: 420px; background-color: #1E2228; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 24px 24px; display: flex; align-items: center; justify-content: center">
+      <div class="dwg-stage" style="position: relative; height: 420px; background-color: #1E2228; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 24px 24px; display: flex; align-items: center; justify-content: center">
         <svg viewBox="0 0 320 200" width="320" height="200" aria-hidden="true" style="max-width: 70%; height: auto"><rect x="20" y="20" width="280" height="160" fill="none" stroke="#C9CED5" stroke-width="2"></rect><path d="M140 20v90h-120M140 110h60v70M200 110h100M80 110v70" fill="none" stroke="#C9CED5" stroke-width="1.5"></path><path d="M140 60a20 20 0 0 1 20 20" fill="none" stroke="#E8743B" stroke-width="1.5"></path></svg>
         <div style="position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.75); white-space: nowrap">DWG viewer · drawing coming soon</div>
       </div>
@@ -439,6 +450,21 @@ document.querySelectorAll('[data-gallery]').forEach(function(g){
   prev.addEventListener('click',function(){p=(p-1+n)%n;show();});
   next.addEventListener('click',function(){p=(p+1)%n;show();});
   show();
+});
+/* Drawing viewer: load the DWG into ShareCAD (needs the site to be online). */
+document.querySelectorAll('[data-dwg]').forEach(function(v){
+  var stage=v.querySelector('.dwg-stage'),note=stage.lastElementChild;
+  if(!/^https?:/.test(location.protocol)){note.textContent='Drawing loads once the site is online';return;}
+  var url=new URL(v.getAttribute('data-dwg'),location.href).href;
+  var f=document.createElement('iframe');
+  f.src='https://sharecad.org/cadframe/load?url='+encodeURIComponent(url);
+  f.title='Drawing viewer';f.setAttribute('allowfullscreen','');f.setAttribute('scrolling','no');
+  f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;';
+  stage.appendChild(f);
+  v.querySelector('.dwg-full').addEventListener('click',function(){
+    var el=stage; if(document.fullscreenElement){document.exitFullscreen();}
+    else if(el.requestFullscreen){el.requestFullscreen();} else if(el.webkitRequestFullscreen){el.webkitRequestFullscreen();}
+  });
 });
 </script>
 </body>

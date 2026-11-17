@@ -203,6 +203,15 @@ h3{font-size:1.2rem;}
   .section{padding:64px 0;}
 }
 
+.uc-bar{height:34px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;background:rgba(232,116,59,0.82);color:var(--navy-deep);font-family:var(--mono);font-size:12px;letter-spacing:0.04em;white-space:nowrap;overflow:hidden;border-top:1px solid rgba(18,29,41,0.12);}
+.uc-bar strong{font-weight:500;text-transform:uppercase;letter-spacing:0.1em;}
+.uc-bar a{text-decoration:underline;text-underline-offset:3px;font-weight:500;}
+@media (max-width:760px){.uc-bar .uc-more{display:none;}}
+.site-header{background:linear-gradient(rgba(250,250,247,0.82),rgba(250,250,247,0.82)) top / 100% calc(100% - 34px) no-repeat !important;}
+html body [id]{scroll-margin-top:123px;}
+html body #portfolio{scroll-margin-top:59px;}
+html body #project-photos,html body #project-deliverables{scroll-margin-top:147px;}
+@media (max-width:560px){html body [id]{scroll-margin-top:107px;}html body #portfolio{scroll-margin-top:67px;}html body #project-photos,html body #project-deliverables{scroll-margin-top:131px;}}
 .hero-copy h1{max-width:100%;}
 .work-card .text-link{color:var(--navy);transition:color .15s;}
 .work-card:hover .text-link,.work-card:focus-visible .text-link{color:var(--orange-deep);}
@@ -229,6 +238,7 @@ h3{font-size:1.2rem;}
 .gallery-nav .prev{background:#FAFAF7;color:#1B2A3A;}
 .gallery-nav .next{background:#1B2A3A;color:#fff;}
 .gallery-nav button:disabled{opacity:.4;cursor:default;}
+.dwg-stage:fullscreen{height:100%!important;}
 .gallery-nav .count{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:#5F6670;min-width:64px;text-align:center;}
 </style>
 </head>
@@ -281,12 +291,13 @@ h3{font-size:1.2rem;}
       <a href="#contact">Get In Touch</a>
     </nav>
   </div>
+  <div class="uc-bar" role="status"><strong>Site under construction</strong><span class="uc-more">· Some Projects and Site details still pending.</span><span>·</span><a href="#contact">Get in touch →</a></div>
 </header>
 
 <section class="grid-band" id="top">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <h1 style="max-width: 492px">We Create drawings you can design, build, and market from.</h1>
+      <h1 style="max-width: 682px">We create drawings you can design, build, and market from.</h1>
       <p class="lede">As-built documentation and drafting support for architecture firms, contractors, interior designers and realtors.</p>
       <div class="cta-row">
         <a href="#contact" class="btn btn-orange">Request a quote</a>
@@ -469,6 +480,21 @@ document.querySelectorAll('[data-gallery]').forEach(function(g){
   prev.addEventListener('click',function(){p=(p-1+n)%n;show();});
   next.addEventListener('click',function(){p=(p+1)%n;show();});
   show();
+});
+/* Drawing viewer: load the DWG into ShareCAD (needs the site to be online). */
+document.querySelectorAll('[data-dwg]').forEach(function(v){
+  var stage=v.querySelector('.dwg-stage'),note=stage.lastElementChild;
+  if(!/^https?:/.test(location.protocol)){note.textContent='Drawing loads once the site is online';return;}
+  var url=new URL(v.getAttribute('data-dwg'),location.href).href;
+  var f=document.createElement('iframe');
+  f.src='https://sharecad.org/cadframe/load?url='+encodeURIComponent(url);
+  f.title='Drawing viewer';f.setAttribute('allowfullscreen','');f.setAttribute('scrolling','no');
+  f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;';
+  stage.appendChild(f);
+  v.querySelector('.dwg-full').addEventListener('click',function(){
+    var el=stage; if(document.fullscreenElement){document.exitFullscreen();}
+    else if(el.requestFullscreen){el.requestFullscreen();} else if(el.webkitRequestFullscreen){el.webkitRequestFullscreen();}
+  });
 });
 </script>
 </body>
