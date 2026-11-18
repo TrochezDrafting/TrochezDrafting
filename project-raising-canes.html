@@ -203,6 +203,11 @@ h3{font-size:1.2rem;}
   .section{padding:64px 0;}
 }
 
+html body .next-band .wrap{align-items:flex-end;}
+html body .next-band .wrap > .btn{margin-bottom:-3px;}
+html body .nav-links a:hover,html body .nav-links a:focus-visible{background:transparent;color:var(--orange-deep);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;}
+html body .nav-links a[aria-current="page"][aria-current]{background:transparent;color:var(--orange-deep);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;}
+html body .nav-links a[aria-current="page"][href="index.html"]:not(:hover):not(:focus-visible){color:inherit;text-decoration:none;}
 .uc-bar{height:34px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;background:rgba(232,116,59,0.82);color:var(--navy-deep);font-family:var(--mono);font-size:12px;letter-spacing:0.04em;white-space:nowrap;overflow:hidden;border-top:1px solid rgba(18,29,41,0.12);}
 .uc-bar strong{font-weight:500;text-transform:uppercase;letter-spacing:0.1em;}
 .uc-bar a{text-decoration:underline;text-underline-offset:3px;font-weight:500;}
@@ -239,6 +244,18 @@ html body #project-photos,html body #project-deliverables{scroll-margin-top:147p
 .gallery-nav .next{background:#1B2A3A;color:#fff;}
 .gallery-nav button:disabled{opacity:.4;cursor:default;}
 .dwg-stage:fullscreen{height:100%!important;}
+.inquiry{display:flex;flex-direction:column;gap:18px;}
+.inquiry .row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.inquiry label{display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--graphite);}
+.inquiry input,.inquiry select,.inquiry textarea{font:inherit;font-family:var(--body);font-size:15px;letter-spacing:0;text-transform:none;color:var(--navy);background:#fff;border:1px solid var(--line-strong);border-radius:0;padding:12px 14px;width:100%;}
+.inquiry textarea{min-height:150px;resize:vertical;}
+.inquiry input:focus,.inquiry select:focus,.inquiry textarea:focus{outline:2px solid var(--orange);outline-offset:0;border-color:var(--navy);}
+.inquiry .req{color:var(--orange-deep);}
+.inquiry .hp{position:absolute;left:-9999px;}
+.inquiry button{align-self:flex-start;cursor:pointer;}
+.form-sent{display:none;border:2px solid var(--navy);border-left:6px solid var(--orange);padding:18px 20px;background:var(--paper);}
+.form-sent.show{display:block;}
+@media (max-width:640px){.inquiry .row{grid-template-columns:1fr;}}
 .gallery-nav .count{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:#5F6670;min-width:64px;text-align:center;}
 </style>
 </head>
@@ -275,10 +292,9 @@ html body #project-photos,html body #project-deliverables{scroll-margin-top:147p
         <a href="services.html">Services</a>
         <a href="index.html#portfolio" aria-current="page">Portfolio</a>
         <a href="about.html">About</a>
-        <a href="index.html#credentials">Credentials</a>
-        <a href="#contact">Contact</a>
+        <a href="contact.html">Contact</a>
       </nav>
-      <a href="#contact" class="btn header-cta">Get In Touch</a>
+      <a href="contact.html" class="btn header-cta">Get In Touch</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" onclick="var h=document.getElementById('site-header');var o=h.classList.toggle('open');this.setAttribute('aria-expanded',o);this.textContent=o?'Close':'Menu';">Menu</button>
     </div>
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
@@ -286,12 +302,11 @@ html body #project-photos,html body #project-deliverables{scroll-margin-top:147p
       <a href="services.html">Services</a>
       <a href="index.html#portfolio">Portfolio</a>
       <a href="about.html">About</a>
-      <a href="index.html#credentials">Credentials</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact">Get In Touch</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html">Get In Touch</a>
     </nav>
   </div>
-  <div class="uc-bar" role="status"><strong>Site under construction</strong><span class="uc-more">· Some Projects and Site details still pending.</span><span>·</span><a href="#contact">Get in touch →</a></div>
+  <div class="uc-bar" role="status"><strong>Site under construction</strong><span class="uc-more">· Some Projects and Site details still pending.</span><span>·</span><a href="contact.html">Get in touch →</a></div>
 </header>
 
 <section class="grid-band page-hero has-photo">
@@ -299,7 +314,7 @@ html body #project-photos,html body #project-deliverables{scroll-margin-top:147p
   <div class="wrap hero-inner">
     <div class="hero-copy">
       <a class="back-link" href="index.html#portfolio">← Back to portfolio</a>
-      <span class="eyebrow">QSR / Restaurant</span>
+      <span class="eyebrow">QSR / Restaurant - As-Built</span>
       <h1>Drive-Thru Restaurant Remodel</h1>
       <p class="lede">Field-verified as-built survey supporting a quick-serve restaurant remodel.</p>
       <div class="cta-row"><a class="btn btn-orange" href="#project-deliverables">See project deliverables</a><a class="btn btn-ghost" href="#project-photos">View Photos</a></div>
@@ -441,6 +456,8 @@ document.querySelectorAll('.copy-btn').forEach(function(b){b.addEventListener('c
   if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fallback);}else{fallback();}
   function fallback(){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(a);}
 });});
+/* Contact form: show the thank-you note after sending. */
+(function(){var m=document.querySelector('.form-sent');if(m&&/[?&]sent=1/.test(location.search)){m.classList.add('show');var f=document.querySelector('.inquiry');if(f)f.style.display='none';}})();
 /* Project photo galleries: three photos per set, arrows slide between sets. */
 document.querySelectorAll('[data-gallery]').forEach(function(g){
   var track=g.querySelector('.photo-track'),n=track.children.length,p=0,
